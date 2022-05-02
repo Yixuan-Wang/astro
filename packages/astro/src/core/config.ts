@@ -3,6 +3,7 @@ import type { Arguments as Flags } from 'yargs-parser';
 import type * as Postcss from 'postcss';
 import type { ILanguageRegistration, IThemeRegistration, Theme } from 'shiki';
 import type { RemarkPlugin, RehypePlugin } from '@astrojs/markdown-remark';
+import type matter from 'gray-matter';
 
 import * as colors from 'kleur/colors';
 import path from 'path';
@@ -180,6 +181,10 @@ export const AstroConfigSchema = z.object({
 				])
 				.array()
 				.default([]),
+			grayMatterOptions: z
+				.custom<Parameters<typeof matter>[1]>()
+				.optional()
+				.default({}),
 		})
 		.default({}),
 	vite: z.any().optional().default({}),

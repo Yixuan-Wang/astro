@@ -91,7 +91,8 @@ export default function markdown({ config }: AstroPluginOptions): Plugin {
 				}
 
 				const source = await fs.promises.readFile(fileId, 'utf8');
-				const { data: frontmatter, excerpt } = matter(source);
+				const { grayMatterOptions } = config.markdown;
+				const { data: frontmatter, excerpt } = matter(source, grayMatterOptions);
 				return {
 					code: `   
 						// Static
@@ -128,7 +129,8 @@ export default function markdown({ config }: AstroPluginOptions): Plugin {
 				const hasInjectedScript = isPage && config._ctx.scripts.some((s) => s.stage === 'page-ssr');
 
 				// Extract special frontmatter keys
-				const { data: frontmatter, content: markdownContent, excerpt } = matter(source);
+				const { grayMatterOptions } = renderOpts;
+				const { data: frontmatter, content: markdownContent, excerpt } = matter(source, grayMatterOptions);
 				let renderResult = await renderMarkdown(markdownContent, renderOpts);
 				let { code: astroResult, metadata } = renderResult;
 				const { layout = '', components = '', setup = '', ...content } = frontmatter;

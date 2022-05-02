@@ -10,6 +10,7 @@ import type {
 	MarkdownMetadata,
 	MarkdownRenderingResult,
 } from '@astrojs/markdown-remark';
+import type matter from 'gray-matter';
 import type { AstroConfigSchema } from '../core/config';
 import type { AstroComponentFactory, Metadata } from '../runtime/server';
 import type { ViteConfigWithSSR } from '../core/create-vite';
@@ -568,6 +569,8 @@ export interface AstroUserConfig {
 		 * ```
 		 */
 		rehypePlugins?: RehypePlugins;
+
+		grayMatterOptions?: Parameters<typeof matter>[1];
 	};
 
 	/**

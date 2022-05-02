@@ -732,11 +732,13 @@ export interface MarkdownInstance<T extends Record<string, any>> {
 	frontmatter: T;
 	file: string;
 	url: string | undefined;
+	excerpt: string | undefined;
 	Content: AstroComponentFactory;
 	getHeaders(): Promise<MarkdownHeader[]>;
 	default: () => Promise<{
 		metadata: MarkdownMetadata;
 		frontmatter: MarkdownContent;
+		excerpt: string | undefined;
 		$$metadata: Metadata;
 		default: AstroComponentFactory;
 	}>;

@@ -91,13 +91,14 @@ export default function markdown({ config }: AstroPluginOptions): Plugin {
 				}
 
 				const source = await fs.promises.readFile(fileId, 'utf8');
-				const { data: frontmatter } = matter(source);
+				const { data: frontmatter, excerpt } = matter(source);
 				return {
 					code: `   
 						// Static
 						export const frontmatter = ${JSON.stringify(frontmatter)};
 						export const file = ${JSON.stringify(fileId)};
 						export const url = ${JSON.stringify(fileUrl)};
+						export const excerpt = ${JSON.stringify(excerpt)};
 						
 						// Deferred
 						export default async function load() {
@@ -127,7 +128,7 @@ export default function markdown({ config }: AstroPluginOptions): Plugin {
 				const hasInjectedScript = isPage && config._ctx.scripts.some((s) => s.stage === 'page-ssr');
 
 				// Extract special frontmatter keys
-				const { data: frontmatter, content: markdownContent } = matter(source);
+				const { data: frontmatter, content: markdownContent, excerpt } = matter(source);
 				let renderResult = await renderMarkdown(markdownContent, renderOpts);
 				let { code: astroResult, metadata } = renderResult;
 				const { layout = '', components = '', setup = '', ...content } = frontmatter;
@@ -161,6 +162,7 @@ ${setup}`.trim();
 
 				tsResult = `\nexport const metadata = ${JSON.stringify(metadata)};
 export const frontmatter = ${JSON.stringify(content)};
+export const excerpt = ${JSON.stringify(excerpt)};
 ${tsResult}`;
 
 				// Compile from `.ts` to `.js`

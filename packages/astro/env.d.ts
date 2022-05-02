@@ -18,6 +18,7 @@ declare module '*.md' {
 	export const frontmatter: MD['frontmatter'];
 	export const file: MD['file'];
 	export const url: MD['url'];
+	export const excerpt: MD['excerpt'];
 	export const getHeaders: MD['getHeaders'];
 	export const Content: MD['Content'];
 
